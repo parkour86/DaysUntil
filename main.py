@@ -23,8 +23,9 @@ class DaysUntilAction(ActionBase):
         self.date_entry_row = None
 
     def get_config_rows(self):
-        # Always fetch the latest value from settings
-        target_date_str = self.settings.get("target_date", "")
+        target_date_str = ""
+        if hasattr(self, "settings") and self.settings is not None:
+            target_date_str = self.settings.get("target_date", "")
         self.date_entry_row = Adw.EntryRow(
             title="Target Date",
             placeholder_text="yyyy/mm/dd",
@@ -34,18 +35,17 @@ class DaysUntilAction(ActionBase):
         return [self.date_entry_row]
 
     def on_date_changed(self, entry_row, *args):
-        # Save new date string
-        target_date_str = entry_row.get_text()
-        self.settings["target_date"] = target_date_str
+        if hasattr(self, "settings") and self.settings is not None:
+            self.settings["target_date"] = entry_row.get_text()
         self.update_labels()
 
     def on_ready(self):
-        # Called when the action is loaded or settings change
         self.update_labels()
 
     def update_labels(self):
-        # Parse date and update labels
-        date_str = self.settings.get("target_date", "").strip()
+        date_str = ""
+        if hasattr(self, "settings") and self.settings is not None:
+            date_str = self.settings.get("target_date", "").strip()
         if self.top_label:
             self.top_label.set_label(f"Days until {date_str if date_str else '____/__/__'}")
         if self.center_label:
