@@ -107,7 +107,7 @@ class DaysUntilPlugin(PluginBase):
         )
         self.add_action_holder(self.days_until_holder)
         self.register(
-            plugin_name=lm.get("plugin.name"),
+            plugin_name="test", #lm.get("plugin.name"),
             github_repo="https://github.com/StreamController/DaysUntilPlugin",
             plugin_version="1.0.0",
             app_version="1.1.1-alpha"
