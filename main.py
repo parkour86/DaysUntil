@@ -98,7 +98,7 @@ class DaysUntilPlugin(PluginBase):
             plugin_base=self,
             action_base=DaysUntilAction,
             action_id_suffix="DaysUntilAction",
-            action_name="Test" #lm.get("actions.daysuntil.name"),
+            action_name="Test", #lm.get("actions.daysuntil.name"),
             action_support={
                 Input.Key: ActionInputSupport.SUPPORTED,
                 Input.Dial: ActionInputSupport.UNTESTED,
