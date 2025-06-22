@@ -17,25 +17,26 @@ class DaysUntilAction(ActionBase):
     """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Load saved date or use empty string
-        self.target_date_str = self.settings.get("target_date", "")
+        # Do NOT access self.settings here!
         self.top_label = None
         self.center_label = None
+        self.date_entry_row = None
 
     def get_config_rows(self):
-        # Entry row for date input
+        # Always fetch the latest value from settings
+        target_date_str = self.settings.get("target_date", "")
         self.date_entry_row = Adw.EntryRow(
             title="Target Date",
             placeholder_text="yyyy/mm/dd",
-            text=self.target_date_str
+            text=target_date_str
         )
         self.date_entry_row.connect("changed", self.on_date_changed)
         return [self.date_entry_row]
 
     def on_date_changed(self, entry_row, *args):
         # Save new date string
-        self.target_date_str = entry_row.get_text()
-        self.settings["target_date"] = self.target_date_str
+        target_date_str = entry_row.get_text()
+        self.settings["target_date"] = target_date_str
         self.update_labels()
 
     def on_ready(self):
@@ -44,7 +45,7 @@ class DaysUntilAction(ActionBase):
 
     def update_labels(self):
         # Parse date and update labels
-        date_str = self.target_date_str.strip()
+        date_str = self.settings.get("target_date", "").strip()
         if self.top_label:
             self.top_label.set_label(f"Days until {date_str if date_str else '____/__/__'}")
         if self.center_label:
