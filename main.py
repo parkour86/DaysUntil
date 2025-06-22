@@ -18,19 +18,29 @@ class DaysUntilAction(ActionBase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.date_entry_row = None
+        self.date_format_switch = None
 
     def get_config_rows(self):
         log.debug("get_config_rows called")
         lm = self.plugin_base.locale_manager
         settings = self.get_settings()
         target_date_str = settings.get("target_date", "")
+        date_format_is_ymd = settings.get("date_format_ymd", True)
+
         self.date_entry_row = Adw.EntryRow(
             title=lm.get("actions.daysuntil.date.title")
         )
         self.date_entry_row.set_text(target_date_str)
         self.date_entry_row.connect("notify::text", self.on_date_changed)
 
-        return [self.date_entry_row]
+        self.date_format_switch = Adw.SwitchRow(
+            title=lm.get("actions.daysuntil.dateformat.title"),
+            subtitle=lm.get("actions.daysuntil.dateformat.subtitle"),
+        )
+        self.date_format_switch.set_active(date_format_is_ymd)
+        self.date_format_switch.connect("notify::active", self.on_date_format_toggled)
+
+        return [self.date_entry_row, self.date_format_switch]
 
     def on_date_changed(self, entry_row, *args):
         settings = self.get_settings()
@@ -38,6 +48,13 @@ class DaysUntilAction(ActionBase):
         settings["target_date"] = new_date
         self.set_settings(settings)
         log.info(f"User set target_date to: {new_date}")
+        self.update_labels()
+
+    def on_date_format_toggled(self, switch, *args):
+        settings = self.get_settings()
+        settings["date_format_ymd"] = switch.get_active()
+        self.set_settings(settings)
+        log.info(f"User set date_format_ymd to: {switch.get_active()}")
         self.update_labels()
 
 
@@ -49,9 +66,31 @@ class DaysUntilAction(ActionBase):
     def update_labels(self):
         settings = self.get_settings()
         date_str = settings.get("target_date", "").strip()
-        log.debug(f"Updating labels with date_str: {date_str}")
+        date_format_ymd = settings.get("date_format_ymd", True)
+        log.debug(f"Updating labels with date_str: {date_str}, date_format_ymd: {date_format_ymd}")
+
+        # Format the date for display in the top label
+        if date_str:
+            try:
+                # Accept both y/m/d and d/m/y input for display
+                date_obj = None
+                if date_format_ymd:
+                    date_obj = datetime.datetime.strptime(date_str.replace("-", "/"), "%Y/%m/%d").date()
+                    display_date = date_obj.strftime("%Y/%m/%d")
+                else:
+                    # Try parsing as d/m/y, fallback to y/m/d
+                    try:
+                        date_obj = datetime.datetime.strptime(date_str.replace("-", "/"), "%d/%m/%Y").date()
+                    except Exception:
+                        date_obj = datetime.datetime.strptime(date_str.replace("-", "/"), "%Y/%m/%d").date()
+                    display_date = date_obj.strftime("%d/%m/%Y")
+            except Exception:
+                display_date = date_str
+        else:
+            display_date = "____/__/__" if date_format_ymd else "__/__/____"
+
         self.set_top_label(
-            f"Days until\n{date_str if date_str else '____/__/__'}",
+            f"Days until\n{display_date}",
             font_size=15,
             color=[0, 180, 255],
             update=True

@@ -2,5 +2,7 @@
   "plugin.name": "Tage bis",
   "actions.daysuntil.name": "Tage bis",
   "actions.daysuntil.date.title": "Zieldatum",
-  "actions.daysuntil.date.placeholder": "jjjj/mm/tt"
+  "actions.daysuntil.date.placeholder": "jjjj/mm/tt",
+  "actions.daysuntil.dateformat.title": "Datumsformat anzeigen",
+  "actions.daysuntil.dateformat.subtitle": "Zwischen TT/MM/JJJJ und JJJJ/MM/TT wechseln"
 }
