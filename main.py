@@ -11,7 +11,6 @@ gi.require_version("Adw", "1")
 from gi.repository import Gtk, Adw
 
 import datetime
-import os
 
 class DaysUntilAction(ActionBase):
     HAS_CONFIGURATION = True  # Show config after adding
@@ -22,7 +21,6 @@ class DaysUntilAction(ActionBase):
         self.date_format_switch = None
 
     def get_config_rows(self):
-        log.debug("get_config_rows called")
         lm = self.plugin_base.locale_manager
         settings = self.get_settings()
         target_date_str = settings.get("target_date", "")
@@ -48,25 +46,21 @@ class DaysUntilAction(ActionBase):
         new_date = entry_row.get_text()
         settings["target_date"] = new_date
         self.set_settings(settings)
-        log.info(f"User set target_date to: {new_date}")
         self.update_labels()
 
     def on_date_format_toggled(self, switch, *args):
         settings = self.get_settings()
         settings["date_format_ymd"] = switch.get_active()
         self.set_settings(settings)
-        log.info(f"User set date_format_ymd to: {switch.get_active()}")
         self.update_labels()
 
     def on_ready(self):
-        log.debug("on_ready called")
         self.update_labels()
 
     def update_labels(self):
         settings = self.get_settings()
         date_str = settings.get("target_date", "").strip()
         date_format_ymd = settings.get("date_format_ymd", True)
-        log.debug(f"Updating labels with date_str: {date_str}, date_format_ymd: {date_format_ymd}")
 
         # Format the date for display in the top label
         if date_str:
@@ -124,8 +118,6 @@ class DaysUntilAction(ActionBase):
             target_date = datetime.datetime.strptime(date_str, "%Y/%m/%d").date()
             today = datetime.date.today()
             delta = (target_date - today).days
-            log.debug(f"target_date={target_date}, today={today}, delta={delta}")
-            log.debug(f"Calculated days until {date_str}: {delta}")
             return max(delta, 0)
         except Exception as e:
             log.warning(f"Failed to parse date '{date_str}': {e}")
