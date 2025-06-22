@@ -84,7 +84,7 @@ class DaysUntilAction(ActionBase):
             target_date = datetime.datetime.strptime(date_str, "%Y/%m/%d").date()
             today = datetime.date.today()
             delta = (target_date - today).days
-            log.debug(target_date, today, delta)
+            log.debug(f"target_date={target_date}, today={today}, delta={delta}")
             log.debug(f"Calculated days until {date_str}: {delta}")
             return max(delta, 0)
         except Exception as e:
