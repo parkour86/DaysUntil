@@ -2,8 +2,8 @@
 from src.backend.PluginManager.PluginBase import PluginBase
 from src.backend.PluginManager.ActionHolder import ActionHolder
 from src.backend.PluginManager.ActionBase import ActionBase
+from loguru import logger as log
 
-# Import GTK/Adw for UI
 import gi
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
@@ -12,40 +12,44 @@ from gi.repository import Gtk, Adw
 import datetime
 
 class DaysUntilAction(ActionBase):
-    """
-    Action that allows the user to enter a date and shows the number of days until that date.
-    """
+    HAS_CONFIGURATION = True  # Show config after adding
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Do NOT access self.settings here!
         self.top_label = None
         self.center_label = None
         self.date_entry_row = None
 
     def get_config_rows(self):
-        target_date_str = ""
-        if hasattr(self, "settings") and self.settings is not None:
-            target_date_str = self.settings.get("target_date", "")
+        lm = self.plugin_base.locale_manager
+        settings = self.get_settings()
+        target_date_str = settings.get("target_date", "")
+        log.debug(f"Loading config row with target_date: {target_date_str}")
+
         self.date_entry_row = Adw.EntryRow(
-            title="Target Date",
-            placeholder_text="yyyy/mm/dd",
+            title=lm.get("actions.daysuntil.date.title"),
+            placeholder_text=lm.get("actions.daysuntil.date.placeholder"),
             text=target_date_str
         )
         self.date_entry_row.connect("changed", self.on_date_changed)
         return [self.date_entry_row]
 
     def on_date_changed(self, entry_row, *args):
-        if hasattr(self, "settings") and self.settings is not None:
-            self.settings["target_date"] = entry_row.get_text()
+        settings = self.get_settings()
+        new_date = entry_row.get_text()
+        settings["target_date"] = new_date
+        self.set_settings(settings)
+        log.info(f"User set target_date to: {new_date}")
         self.update_labels()
 
     def on_ready(self):
+        log.debug("on_ready called")
         self.update_labels()
 
     def update_labels(self):
-        date_str = ""
-        if hasattr(self, "settings") and self.settings is not None:
-            date_str = self.settings.get("target_date", "").strip()
+        settings = self.get_settings()
+        date_str = settings.get("target_date", "").strip()
+        log.debug(f"Updating labels with date_str: {date_str}")
         if self.top_label:
             self.top_label.set_label(f"Days until {date_str if date_str else '____/__/__'}")
         if self.center_label:
@@ -62,27 +66,29 @@ class DaysUntilAction(ActionBase):
 
     def calculate_days_until(self, date_str):
         try:
-            # Accept yyyy/mm/dd or yyyy-mm-dd
             date_str = date_str.replace("-", "/")
             target_date = datetime.datetime.strptime(date_str, "%Y/%m/%d").date()
             today = datetime.date.today()
             delta = (target_date - today).days
+            log.debug(f"Calculated days until {date_str}: {delta}")
             return max(delta, 0)
-        except Exception:
+        except Exception as e:
+            log.warning(f"Failed to parse date '{date_str}': {e}")
             return None
 
 class DaysUntilPlugin(PluginBase):
     def __init__(self):
         super().__init__()
+        lm = self.locale_manager
         self.days_until_holder = ActionHolder(
             plugin_base=self,
             action_base=DaysUntilAction,
             action_id="com_codeNinja_DaysUntil::DaysUntilAction",
-            action_name="Days until"
+            action_name=lm.get("actions.daysuntil.name")
         )
         self.add_action_holder(self.days_until_holder)
         self.register(
-            plugin_name="Days until",
+            plugin_name=lm.get("plugin.name"),
             github_repo="https://github.com/StreamController/DaysUntilPlugin",
             plugin_version="1.0.0",
             app_version="1.1.1-alpha"
