@@ -25,7 +25,7 @@ class DaysUntilAction(ActionBase):
         settings = self.get_settings()
         target_date_str = settings.get("target_date", "")
         self.date_entry_row = Adw.EntryRow(
-            title=lm.get("actions.daysuntil.date.title")
+            title=lm.get("actions.daysuntil.date.placeholder")
         )
         self.date_entry_row.set_text(target_date_str)
         self.date_entry_row.connect("notify::text", self.on_date_changed)
@@ -97,8 +97,8 @@ class DaysUntilPlugin(PluginBase):
         self.days_until_holder = ActionHolder(
             plugin_base=self,
             action_base=DaysUntilAction,
-            action_id_suffix="DaysUntilAction",
-            action_name="Test", #lm.get("actions.daysuntil.name"),
+            #action_id_suffix="DaysUntilAction",
+            action_name=lm.get("actions.daysuntil.name"),
             action_support={
                 Input.Key: ActionInputSupport.SUPPORTED,
                 Input.Dial: ActionInputSupport.UNTESTED,
