@@ -64,14 +64,14 @@ class DaysUntilAction(ActionBase):
         else:
             days = self.calculate_days_until(date_str)
             if days is not None:
-                self.set_center_label(
+                self.set_bottom_label(
                     f"{days} days",
                     font_size=22,
                     color=[0, 200, 100],
                     update=True
                 )
             else:
-                self.set_center_label(
+                self.set_bottom_label(
                     "—",
                     font_size=22,
                     color=[180, 180, 180],
