@@ -21,20 +21,30 @@ class DaysUntilAction(ActionBase):
         self.date_entry_row = None
 
     def get_config_rows(self):
-        log.debug("get_config_rows called")
         lm = self.plugin_base.locale_manager
         settings = self.get_settings()
         target_date_str = settings.get("target_date", "")
+        log.debug("get_config_rows called")
         log.debug(f"Loading config row with target_date: {target_date_str}")
 
+        # self.date_entry_row = Adw.EntryRow(
+        #     title=lm.get("actions.daysuntil.date.title") or "Target Date",
+        #     placeholder_text=lm.get("actions.daysuntil.date.placeholder") or "YYYY/MM/DD",
+        #     text=target_date_str
+        # )
         self.date_entry_row = Adw.EntryRow(
-            title=lm.get("actions.daysuntil.date.title"),
-            placeholder_text=lm.get("actions.daysuntil.date.placeholder"),
+            title="Target Date",
+            placeholder_text="YYYY/MM/DD",
             text=target_date_str
         )
         self.date_entry_row.connect("changed", self.on_date_changed)
+
         log.debug(f"Returning config row: {self.date_entry_row}")
-        return [self.date_entry_row]
+
+        group = Adw.PreferencesGroup(title="Days Until Settings")
+        group.add(self.date_entry_row)
+
+        return [group]
 
     def on_date_changed(self, entry_row, *args):
         settings = self.get_settings()
