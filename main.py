@@ -23,19 +23,17 @@ class DaysUntilAction(ActionBase):
     def get_config_rows(self):
         log.debug("get_config_rows called")
 
-        settings = self.get_settings()
-        target_date_str = settings.get("target_date", "")
-        log.debug(f"Loading config row with target_date: {target_date_str}")
+        # settings = self.get_settings()
+        # target_date_str = settings.get("target_date", "")
+        # log.debug(f"Loading config row with target_date: {target_date_str}")
 
         self.date_entry_row = Adw.EntryRow(
             title="Target Date",
-            placeholder_text="YYYY/MM/DD",
-            text=target_date_str
+            placeholder_text="YYYY/MM/DD"
         )
-        self.date_entry_row.connect("changed", self.on_date_changed)
+        self.date_entry_row.connect("notify::text", self.on_date_changed)
 
         return [self.date_entry_row]
-
 
     def on_date_changed(self, entry_row, *args):
         settings = self.get_settings()
