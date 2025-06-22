@@ -1,0 +1,7 @@
+{
+  "plugin.name": "Días Hasta",
+  "actions.daysuntil.name": "Días Hasta",
+  "actions.daysuntil.date.title": "Fecha objetivo (aaaa/mm/dd)",
+  "actions.daysuntil.dateformat.title": "Formato de fecha",
+  "actions.daysuntil.dateformat.subtitle": "Cambiar entre aaaa/mm/dd y mm/dd/aaaa"
+}

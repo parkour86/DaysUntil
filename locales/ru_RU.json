@@ -1,0 +1,7 @@
+{
+  "plugin.name": "Дней до",
+  "actions.daysuntil.name": "Дней до",
+  "actions.daysuntil.date.title": "Целевая дата (гггг/мм/дд)",
+  "actions.daysuntil.dateformat.title": "Формат даты",
+  "actions.daysuntil.dateformat.subtitle": "Переключение между гггг/мм/дд и мм/дд/гггг"
+}
