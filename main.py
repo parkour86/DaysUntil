@@ -27,10 +27,6 @@ class DaysUntilAction(ActionBase):
         target_date_str = settings.get("target_date", "")
         log.debug(f"Loading config row with target_date: {target_date_str}")
 
-        # Create a vertical box container
-        container = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12, margin_top=12, margin_bottom=12)
-
-        # Create the entry row
         self.date_entry_row = Adw.EntryRow(
             title="Target Date",
             placeholder_text="YYYY/MM/DD",
@@ -38,15 +34,7 @@ class DaysUntilAction(ActionBase):
         )
         self.date_entry_row.connect("changed", self.on_date_changed)
 
-        # Add entry to group
-        group = Adw.PreferencesGroup(title="Days Until Settings")
-        group.add(self.date_entry_row)
-
-        # Add group to container
-        container.append(group)
-
-        # Return container as single-item list
-        return [container]
+        return [self.date_entry_row]
 
 
     def on_date_changed(self, entry_row, *args):
