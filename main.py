@@ -18,6 +18,8 @@ class DaysUntilAction(ActionBase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.date_entry_row = None
+        self.calendar_popover = None
+        self.calendar_widget = None
 
     def get_config_rows(self):
         log.debug("get_config_rows called")
@@ -29,6 +31,15 @@ class DaysUntilAction(ActionBase):
         )
         self.date_entry_row.set_text(target_date_str)
         self.date_entry_row.connect("notify::text", self.on_date_changed)
+        self.date_entry_row.connect("activate", self.on_date_entry_activated)
+        self.date_entry_row.connect("focus-in-event", self.on_date_entry_focused)
+
+        # Prepare calendar popover (created on demand)
+        if not self.calendar_popover:
+            self.calendar_widget = Gtk.Calendar()
+            self.calendar_widget.connect("day-selected-double-click", self.on_calendar_date_selected)
+            self.calendar_popover = Gtk.Popover.new(self.date_entry_row)
+            self.calendar_popover.set_child(self.calendar_widget)
 
         return [self.date_entry_row]
 
@@ -39,6 +50,24 @@ class DaysUntilAction(ActionBase):
         self.set_settings(settings)
         log.info(f"User set target_date to: {new_date}")
         self.update_labels()
+
+    def on_date_entry_activated(self, entry_row, *args):
+        if self.calendar_popover:
+            self.calendar_popover.popup()
+
+    def on_date_entry_focused(self, entry_row, event, *args):
+        if self.calendar_popover:
+            self.calendar_popover.popup()
+        return False  # propagate event
+
+    def on_calendar_date_selected(self, calendar, *args):
+        year, month, day = calendar.get_date()
+        # Gtk.Calendar returns month as 0-based, so add 1
+        date_str = f"{year}/{month+1:02d}/{day:02d}"
+        if self.date_entry_row:
+            self.date_entry_row.set_text(date_str)
+        if self.calendar_popover:
+            self.calendar_popover.popdown()
 
     def on_ready(self):
         log.debug("on_ready called")
