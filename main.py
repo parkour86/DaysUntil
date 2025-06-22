@@ -91,7 +91,7 @@ class DaysUntilAction(ActionBase):
         color = [253, 195, 123]  # #FDC37B
 
         if not date_str:
-            label = "\n-—"
+            label = "\n--"
             font_size = 22
         else:
             days = self.calculate_days_until(date_str)
@@ -99,7 +99,7 @@ class DaysUntilAction(ActionBase):
                 label = f"\n{days} days"
                 font_size = 15
             else:
-                label = "\n—-"
+                label = "\n--"
                 font_size = 22
 
         self.set_center_label(label, font_size=font_size, color=color, update=True)
