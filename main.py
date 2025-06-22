@@ -88,7 +88,8 @@ class DaysUntilAction(ActionBase):
             f"{lm.get('actions.daysuntil.name')}\n{display_date}",
             font_size=int(lm.get("actions.daysuntil.toplabel.font", 14)),
             color=[172, 244, 188],  # #ACF4BC
-            font_family="Umpush:style=Bold",
+            font_family="Umpush",
+            font_weight="bold",
             update=True
         )
         color = [253, 195, 123]  # #FDC37B
