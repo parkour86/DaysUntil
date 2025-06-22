@@ -11,6 +11,7 @@ gi.require_version("Adw", "1")
 from gi.repository import Gtk, Adw
 
 import datetime
+import os
 
 class DaysUntilAction(ActionBase):
     HAS_CONFIGURATION = True  # Show config after adding
@@ -57,13 +58,10 @@ class DaysUntilAction(ActionBase):
         log.info(f"User set date_format_ymd to: {switch.get_active()}")
         self.update_labels()
 
-
-
     def on_ready(self):
         log.debug("on_ready called")
         # Set the background image
-        bg_path = os.path.join(self.plugin_base.PATH, "assets", "background.png")
-        self.set_background_media(media_path=bg_path)
+        self.set_media(media_path=os .path.join(self.plugin_base.PATH, "assets", "background.png"), size=0.8, valign=-1, update=True)
         self.update_labels()
 
     def update_labels(self):
