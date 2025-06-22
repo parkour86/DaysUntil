@@ -46,9 +46,29 @@ class DaysUntilAction(ActionBase):
         settings = self.get_settings()
         date_str = settings.get("target_date", "").strip()
         log.debug(f"Updating labels with date_str: {date_str}")
-        self.set_top_label(f"Days until\n{date_str if date_str else '____/__/__'}", font_size=11, update=True)
+        # Top label: bold, larger, newline, friendlier
+        self.set_top_label(
+            f"<b>Days until</b>\n{date_str if date_str else '____/__/__'}",
+            font_size=15,
+            color=[0, 180, 255],
+            update=True
+        )
         days = self.calculate_days_until(date_str)
-        self.set_center_label(str(days) if days is not None else "—", font_size=12, update=True)
+        # Center label: big, bold, green if valid, gray if not
+        if days is not None:
+            self.set_center_label(
+                f"<b>{days} days</b>",
+                font_size=22,
+                color=[0, 200, 100],
+                update=True
+            )
+        else:
+            self.set_center_label(
+                "—",
+                font_size=22,
+                color=[180, 180, 180],
+                update=True
+            )
 
     def calculate_days_until(self, date_str):
         try:
