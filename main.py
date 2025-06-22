@@ -89,7 +89,6 @@ class DaysUntilAction(ActionBase):
             font_size=int(lm.get("actions.daysuntil.toplabel.font", 14)),
             color=[172, 244, 188],  # #ACF4BC
             font_family="Umpush",
-            font_weight="bold",
             update=True
         )
         color = [253, 195, 123]  # #FDC37B
@@ -103,7 +102,7 @@ class DaysUntilAction(ActionBase):
             label = "\n--"
             font_size = 22
 
-        self.set_center_label(label, font_size=font_size, font_family="Umpush:style=Bold", color=color, update=True)
+        self.set_center_label(label, font_size=font_size, font_family="Umpush", color=color, update=True)
 
     def calculate_days_until(self, date_str):
         try:
