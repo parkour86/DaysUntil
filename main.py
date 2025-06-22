@@ -25,7 +25,7 @@ class DaysUntilAction(ActionBase):
         settings = self.get_settings()
         target_date_str = settings.get("target_date", "")
         self.date_entry_row = Adw.EntryRow(
-            title=lm.get("actions.daysuntil.date.placeholder")
+            title=lm.get("actions.daysuntil.date.title")
         )
         self.date_entry_row.set_text(target_date_str)
         self.date_entry_row.connect("notify::text", self.on_date_changed)
@@ -107,7 +107,7 @@ class DaysUntilPlugin(PluginBase):
         )
         self.add_action_holder(self.days_until_holder)
         self.register(
-            plugin_name="test", #lm.get("plugin.name"),
+            plugin_name=lm.get("plugin.name"),
             github_repo="https://github.com/StreamController/DaysUntilPlugin",
             plugin_version="1.0.0",
             app_version="1.1.1-alpha"
