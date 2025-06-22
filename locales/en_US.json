@@ -1,6 +1,6 @@
 {
   "plugin.name": "Days until",
-  "actions.daysuntil.name": "Days until",
+  "actions.daysuntil.name": "Days Until",
   "actions.daysuntil.date.title": "Target Date",
   "actions.daysuntil.date.placeholder": "yyyy/mm/dd"
 }
