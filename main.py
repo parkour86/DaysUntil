@@ -55,7 +55,7 @@ class DaysUntilAction(ActionBase):
             update=True
         )
         if not date_str:
-            self.set_center_label(
+            self.set_bottom_label(
                 "—",
                 font_size=22,
                 color=[180, 180, 180],
