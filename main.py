@@ -57,7 +57,7 @@ class DaysUntilAction(ActionBase):
         if not date_str:
             self.set_bottom_label(
                 "—",
-                font_size=22,
+                font_size=16,
                 color=[180, 180, 180],
                 update=True
             )
@@ -66,7 +66,7 @@ class DaysUntilAction(ActionBase):
             if days is not None:
                 self.set_bottom_label(
                     f"{days} days",
-                    font_size=22,
+                    font_size=16,
                     color=[0, 200, 100],
                     update=True
                 )
