@@ -72,18 +72,18 @@ class DaysUntilAction(ActionBase):
         # Format the date for display in the top label
         if date_str:
             try:
-                # Accept both y/m/d and d/m/y input for display
+                # Accept both y/m/d and m/d/y input for display
                 date_obj = None
                 if date_format_ymd:
                     date_obj = datetime.datetime.strptime(date_str.replace("-", "/"), "%Y/%m/%d").date()
                     display_date = date_obj.strftime("%Y/%m/%d")
                 else:
-                    # Try parsing as d/m/y, fallback to y/m/d
+                    # Try parsing as m/d/y, fallback to y/m/d
                     try:
                         date_obj = datetime.datetime.strptime(date_str.replace("-", "/"), "%m/%d/%Y").date()
                     except Exception:
                         date_obj = datetime.datetime.strptime(date_str.replace("-", "/"), "%Y/%m/%d").date()
-                    display_date = date_obj.strftime("%d/%m/%Y")
+                    display_date = date_obj.strftime("%m/%d/%Y")
             except Exception:
                 display_date = date_str
         else:
