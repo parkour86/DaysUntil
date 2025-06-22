@@ -82,10 +82,11 @@ class DaysUntilAction(ActionBase):
         else:
             display_date = "____/__/__" if date_format_ymd else "__/__/____"
 
+        lm = self.plugin_base.locale_manager
         # Always show the placeholder if date_str is empty or cleared
         self.set_top_label(
-            f"Days Until\n{display_date}",
-            font_size=14,
+            f"{lm.get('actions.daysuntil.name')}\n{display_date}",
+            font_size=int(lm.get("actions.daysuntil.toplabel.font", 14)),
             color=[172, 244, 188],  # #ACF4BC
             update=True
         )
@@ -94,8 +95,8 @@ class DaysUntilAction(ActionBase):
         days = self.calculate_days_until(date_str) if date_str else None
 
         if date_str and days is not None:
-            label = f"\n{days} days"
-            font_size = 15
+            label = f"\n{days} {lm.get('actions.daysuntil.days_label', 'days')}"
+            font_size = int(lm.get("actions.daysuntil.bottomlabel.font", 15))
         else:
             label = "\n--"
             font_size = 22
