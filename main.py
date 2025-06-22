@@ -25,7 +25,7 @@ class DaysUntilAction(ActionBase):
         settings = self.get_settings()
         target_date_str = settings.get("target_date", "")
         self.date_entry_row = Adw.EntryRow(
-            title=lm.get("actions.daysuntil.date.title")
+            title=lm.get("actions.daysuntil.date.placeholder")
         )
         self.date_entry_row.set_text(target_date_str)
         self.date_entry_row.connect("notify::text", self.on_date_changed)
