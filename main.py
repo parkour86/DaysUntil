@@ -17,8 +17,6 @@ class DaysUntilAction(ActionBase):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.top_label = None
-        self.center_label = None
         self.date_entry_row = None
 
     def get_config_rows(self):
@@ -48,19 +46,9 @@ class DaysUntilAction(ActionBase):
         settings = self.get_settings()
         date_str = settings.get("target_date", "").strip()
         log.debug(f"Updating labels with date_str: {date_str}")
-        if self.top_label:
-            self.top_label.set_label(f"Days until {date_str if date_str else '____/__/__'}")
-        if self.center_label:
-            days = self.calculate_days_until(date_str)
-            self.center_label.set_label(str(days) if days is not None else "—")
-
-    def set_top_label(self, label_widget):
-        self.top_label = label_widget
-        self.update_labels()
-
-    def set_center_label(self, label_widget):
-        self.center_label = label_widget
-        self.update_labels()
+        self.set_top_label(f"Days until {date_str if date_str else '____/__/__'}", font_size=11, update=True)
+        days = self.calculate_days_until(date_str)
+        self.set_center_label(str(days) if days is not None else "—", font_size=12, update=True)
 
     def calculate_days_until(self, date_str):
         try:
