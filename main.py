@@ -1,5 +1,3 @@
-from keras.backend import placeholder
-from isort import place_module
 from src.backend.PluginManager.PluginBase import PluginBase
 from src.backend.PluginManager.ActionHolder import ActionHolder
 from src.backend.PluginManager.ActionBase import ActionBase
