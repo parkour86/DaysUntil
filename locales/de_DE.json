@@ -3,5 +3,5 @@
   "actions.daysuntil.name": "Tage bis",
   "actions.daysuntil.date.title": "Zieldatum",
   "actions.daysuntil.dateformat.title": "Datumsformat anzeigen",
-  "actions.daysuntil.dateformat.subtitle": "Zwischen TT/MM/JJJJ und JJJJ/MM/TT wechseln"
+  "actions.daysuntil.dateformat.subtitle": "Zwischen JJJJ/MM/TT und MM/TT/JJJJ wechseln"
 }

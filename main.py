@@ -80,7 +80,7 @@ class DaysUntilAction(ActionBase):
                 else:
                     # Try parsing as d/m/y, fallback to y/m/d
                     try:
-                        date_obj = datetime.datetime.strptime(date_str.replace("-", "/"), "%d/%m/%Y").date()
+                        date_obj = datetime.datetime.strptime(date_str.replace("-", "/"), "%m/%d/%Y").date()
                     except Exception:
                         date_obj = datetime.datetime.strptime(date_str.replace("-", "/"), "%Y/%m/%d").date()
                     display_date = date_obj.strftime("%d/%m/%Y")
@@ -93,6 +93,7 @@ class DaysUntilAction(ActionBase):
             f"Days until\n{display_date}",
             font_size=15,
             color=[0, 180, 255],
+            outline_size=1,
             update=True
         )
         if not date_str:
