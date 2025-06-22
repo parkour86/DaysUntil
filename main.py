@@ -92,7 +92,6 @@ class DaysUntilAction(ActionBase):
         self.set_top_label(
             f"Days until\n{display_date}",
             font_size=15,
-            stroke_width=1,
             color=[0, 180, 255],
             update=True
         )
