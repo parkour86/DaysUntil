@@ -48,7 +48,7 @@ class DaysUntilAction(ActionBase):
         log.debug(f"Updating labels with date_str: {date_str}")
         # Top label: bold, larger, newline, friendlier
         self.set_top_label(
-            f"<b>Days until</b>\n{date_str if date_str else '____/__/__'}",
+            f"Days until\n{date_str if date_str else '____/__/__'}",
             font_size=15,
             color=[0, 180, 255],
             update=True
@@ -57,7 +57,7 @@ class DaysUntilAction(ActionBase):
         # Center label: big, bold, green if valid, gray if not
         if days is not None:
             self.set_center_label(
-                f"<b>{days} days</b>",
+                f"{days} days",
                 font_size=22,
                 color=[0, 200, 100],
                 update=True
