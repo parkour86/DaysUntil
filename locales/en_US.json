@@ -1,10 +1,6 @@
 {
-    "plugin.name": "Counter",
-    "actions.counter.restore.title": "Restore value",
-    "actions.counter.long.dropdown.title": "On long press",
-    "actions.counter.long.dropdown.substract": "Substract",
-    "actions.counter.long.dropdown.reset": "Reset",
-    "actions.counter.file.title": "Save to file",
-    "actions.counter.file.path": "File path",
-    "actions.counter.name": "Counter"
+  "plugin.name": "Days until",
+  "actions.daysuntil.name": "Days until",
+  "actions.daysuntil.date.title": "Target Date",
+  "actions.daysuntil.date.placeholder": "yyyy/mm/dd"
 }
