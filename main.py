@@ -29,7 +29,7 @@ class DaysUntilAction(ActionBase):
 
         self.date_entry_row = Adw.EntryRow(
             title="Target Date",
-            placeholder_text="YYYY/MM/DD"
+            #placeholder_text="YYYY/MM/DD"
         )
         self.date_entry_row.connect("notify::text", self.on_date_changed)
 
@@ -41,7 +41,7 @@ class DaysUntilAction(ActionBase):
         settings["target_date"] = new_date
         self.set_settings(settings)
         log.info(f"User set target_date to: {new_date}")
-        self.update_labels()
+        #self.update_labels()
 
     def on_ready(self):
         log.debug("on_ready called")
