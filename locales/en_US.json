@@ -3,6 +3,6 @@
   "actions.daysuntil.name": "Days Until",
   "actions.daysuntil.date.title": "Target Date (yyyy/mm/dd)",
   "actions.daysuntil.date.placeholder": "yyyy/mm/dd",
-  "actions.daysuntil.format.title": "Date Format",
-  "actions.daysuntil.format.subtitle": "Switch between yyyy/mm/dd and dd/mm/yyyy"
+  "actions.daysuntil.dateformat.title": "Date Format",
+  "actions.daysuntil.dateformat.subtitle": "Switch between yyyy/mm/dd and dd/mm/yyyy"
 }
