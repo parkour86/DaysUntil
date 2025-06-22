@@ -61,6 +61,9 @@ class DaysUntilAction(ActionBase):
 
     def on_ready(self):
         log.debug("on_ready called")
+        # Set the background image
+        bg_path = os.path.join(self.plugin_base.PATH, "assets", "background.png")
+        self.set_background_media(media_path=bg_path)
         self.update_labels()
 
     def update_labels(self):
