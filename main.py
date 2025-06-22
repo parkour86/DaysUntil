@@ -82,16 +82,17 @@ class DaysUntilAction(ActionBase):
 class DaysUntilPlugin(PluginBase):
     def __init__(self):
         super().__init__()
-        lm = self.locale_manager
+        # Use hardcoded action name instead of localization (for debugging)
         self.days_until_holder = ActionHolder(
             plugin_base=self,
             action_base=DaysUntilAction,
             action_id="com_codeNinja_DaysUntil::DaysUntilAction",
-            action_name=lm.get("actions.daysuntil.name")
+            action_name="Days Until"  # ← Hardcoded
         )
         self.add_action_holder(self.days_until_holder)
+
         self.register(
-            plugin_name=lm.get("plugin.name"),
+            plugin_name="Days Until",  # ← Also hardcoded
             github_repo="https://github.com/StreamController/DaysUntilPlugin",
             plugin_version="1.0.0",
             app_version="1.1.1-alpha"
