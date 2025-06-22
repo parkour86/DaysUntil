@@ -77,7 +77,7 @@ class DaysUntilPlugin(PluginBase):
         self.days_until_holder = ActionHolder(
             plugin_base=self,
             action_base=DaysUntilAction,
-            action_id="dev_core447_DaysUntil::DaysUntilAction",
+            action_id="com_codeNinja_DaysUntil::DaysUntilAction",
             action_name="Days until"
         )
         self.add_action_holder(self.days_until_holder)
