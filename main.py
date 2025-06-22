@@ -21,17 +21,16 @@ class DaysUntilAction(ActionBase):
         self.date_entry_row = None
 
     def get_config_rows(self):
-        lm = self.plugin_base.locale_manager
+        log.debug("get_config_rows called")
+
         settings = self.get_settings()
         target_date_str = settings.get("target_date", "")
-        log.debug("get_config_rows called")
         log.debug(f"Loading config row with target_date: {target_date_str}")
 
-        # self.date_entry_row = Adw.EntryRow(
-        #     title=lm.get("actions.daysuntil.date.title") or "Target Date",
-        #     placeholder_text=lm.get("actions.daysuntil.date.placeholder") or "YYYY/MM/DD",
-        #     text=target_date_str
-        # )
+        # Create a vertical box container
+        container = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12, margin_top=12, margin_bottom=12)
+
+        # Create the entry row
         self.date_entry_row = Adw.EntryRow(
             title="Target Date",
             placeholder_text="YYYY/MM/DD",
@@ -39,12 +38,16 @@ class DaysUntilAction(ActionBase):
         )
         self.date_entry_row.connect("changed", self.on_date_changed)
 
-        log.debug(f"Returning config row: {self.date_entry_row}")
-
+        # Add entry to group
         group = Adw.PreferencesGroup(title="Days Until Settings")
         group.add(self.date_entry_row)
 
-        return [group]
+        # Add group to container
+        container.append(group)
+
+        # Return container as single-item list
+        return [container]
+
 
     def on_date_changed(self, entry_row, *args):
         settings = self.get_settings()
