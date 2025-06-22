@@ -84,33 +84,25 @@ class DaysUntilAction(ActionBase):
 
         self.set_top_label(
             f"Days until\n{display_date}",
-            font_size=15,
-            color=[0, 180, 255],
+            font_size=14,
+            color=[172, 244, 188],  # #ACF4BC
             update=True
         )
+        color = [253, 195, 123]  # #FDC37B
+
         if not date_str:
-            self.set_bottom_label(
-                "—",
-                font_size=16,
-                color=[180, 180, 180],
-                update=True
-            )
+            label = "\n—"
+            font_size = 22
         else:
             days = self.calculate_days_until(date_str)
             if days is not None:
-                self.set_bottom_label(
-                    f"{days} days",
-                    font_size=16,
-                    color=[0, 200, 100],
-                    update=True
-                )
+                label = f"\n{days} days"
+                font_size = 15
             else:
-                self.set_bottom_label(
-                    "—",
-                    font_size=22,
-                    color=[180, 180, 180],
-                    update=True
-                )
+                label = "\n—"
+                font_size = 22
+
+        self.set_center_label(label, font_size=font_size, color=color, update=True)
 
     def calculate_days_until(self, date_str):
         try:
