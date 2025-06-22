@@ -27,15 +27,8 @@ class DaysUntilAction(ActionBase):
         self.date_entry_row = Adw.EntryRow(
             title=lm.get("actions.daysuntil.date.title")
         )
-        # If no date is set, show the hint
-        if not target_date_str:
-            self.date_entry_row.set_text(self.hint_text)
-            self.date_entry_row.get_style_context().add_class("dim-label")
-        else:
-            self.date_entry_row.set_text(target_date_str)
+        self.date_entry_row.set_text(target_date_str)
         self.date_entry_row.connect("notify::text", self.on_date_changed)
-        self.date_entry_row.connect("focus-in-event", self.on_focus_in)
-        self.date_entry_row.connect("focus-out-event", self.on_focus_out)
 
         return [self.date_entry_row]
 
