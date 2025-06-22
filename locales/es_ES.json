@@ -3,5 +3,7 @@
   "actions.daysuntil.name": "Días Hasta",
   "actions.daysuntil.date.title": "Fecha objetivo (aaaa/mm/dd)",
   "actions.daysuntil.dateformat.title": "Formato de fecha",
-  "actions.daysuntil.dateformat.subtitle": "Cambiar entre aaaa/mm/dd y mm/dd/aaaa"
+  "actions.daysuntil.dateformat.subtitle": "Cambiar entre aaaa/mm/dd y mm/dd/aaaa",
+  "actions.daysuntil.toplabel.font": "14",
+  "actions.daysuntil.days_label": "días"
 }

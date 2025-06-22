@@ -96,7 +96,7 @@ class DaysUntilAction(ActionBase):
 
         if date_str and days is not None:
             label = f"\n{days} {lm.get('actions.daysuntil.days_label', 'days')}"
-            font_size = int(lm.get("actions.daysuntil.bottomlabel.font", 15))
+            font_size = 15
         else:
             label = "\n--"
             font_size = 22

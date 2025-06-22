@@ -3,5 +3,7 @@
   "actions.daysuntil.name": "Jours Restants",
   "actions.daysuntil.date.title": "Date cible (aaaa/mm/jj)",
   "actions.daysuntil.dateformat.title": "Format de date",
-  "actions.daysuntil.dateformat.subtitle": "Basculer entre aaaa/mm/jj et mm/jj/aaaa"
+  "actions.daysuntil.dateformat.subtitle": "Basculer entre aaaa/mm/jj et mm/jj/aaaa",
+  "actions.daysuntil.toplabel.font": "12",
+  "actions.daysuntil.days_label": "jours"
 }

@@ -2,7 +2,6 @@
   "plugin.name": "Days Until",
   "actions.daysuntil.name": "Days Until",
   "actions.daysuntil.toplabel.font": "14",
-  "actions.daysuntil.bottomlabel.font": "15",
   "actions.daysuntil.days_label": "days",
   "actions.daysuntil.date.title": "Target Date (yyyy/mm/dd)",
   "actions.daysuntil.dateformat.title": "Date Format",
