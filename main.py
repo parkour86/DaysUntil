@@ -21,10 +21,11 @@ class DaysUntilAction(ActionBase):
 
     def get_config_rows(self):
         log.debug("get_config_rows called")
+        lm = self.plugin_base.locale_manager
         settings = self.get_settings()
         target_date_str = settings.get("target_date", "")
         self.date_entry_row = Adw.EntryRow(
-            title="Target Date"
+            title=lm.get("actions.daysuntil.date.title")
         )
         self.date_entry_row.set_text(target_date_str)
         self.date_entry_row.connect("notify::text", self.on_date_changed)
@@ -63,7 +64,7 @@ class DaysUntilAction(ActionBase):
                 update=True
             )
         else:
-            self.set_center_label(
+            self.set_bottom_label(
                 "—",
                 font_size=22,
                 color=[180, 180, 180],
@@ -85,11 +86,12 @@ class DaysUntilAction(ActionBase):
 class DaysUntilPlugin(PluginBase):
     def __init__(self):
         super().__init__()
+        lm = self.locale_manager
         self.days_until_holder = ActionHolder(
             plugin_base=self,
             action_base=DaysUntilAction,
             action_id_suffix="DaysUntilAction",
-            action_name="Days Until",
+            action_name=lm.get("actions.daysuntil.name"),
             action_support={
                 Input.Key: ActionInputSupport.SUPPORTED,
                 Input.Dial: ActionInputSupport.UNTESTED,
@@ -98,7 +100,7 @@ class DaysUntilPlugin(PluginBase):
         )
         self.add_action_holder(self.days_until_holder)
         self.register(
-            plugin_name="Days Until",
+            plugin_name=lm.get("plugin.name"),
             github_repo="https://github.com/StreamController/DaysUntilPlugin",
             plugin_version="1.0.0",
             app_version="1.1.1-alpha"
