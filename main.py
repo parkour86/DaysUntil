@@ -1,3 +1,5 @@
+from keras.backend import placeholder
+from isort import place_module
 from src.backend.PluginManager.PluginBase import PluginBase
 from src.backend.PluginManager.ActionHolder import ActionHolder
 from src.backend.PluginManager.ActionBase import ActionBase
@@ -25,7 +27,8 @@ class DaysUntilAction(ActionBase):
         settings = self.get_settings()
         target_date_str = settings.get("target_date", "")
         self.date_entry_row = Adw.EntryRow(
-            title=lm.get("actions.daysuntil.date.title")
+            title=lm.get("actions.daysuntil.date.title"),
+            placeholder_text=lm.get("actions.daysuntil.date.placeholder")
         )
         self.date_entry_row.set_text(target_date_str)
         self.date_entry_row.connect("notify::text", self.on_date_changed)
@@ -47,29 +50,35 @@ class DaysUntilAction(ActionBase):
         settings = self.get_settings()
         date_str = settings.get("target_date", "").strip()
         log.debug(f"Updating labels with date_str: {date_str}")
-        # Top label: bold, larger, newline, friendlier
         self.set_top_label(
             f"Days until\n{date_str if date_str else '____/__/__'}",
             font_size=15,
             color=[0, 180, 255],
             update=True
         )
-        days = self.calculate_days_until(date_str)
-        # Center label: big, bold, green if valid, gray if not
-        if days is not None:
+        if not date_str:
             self.set_center_label(
-                f"{days} days",
-                font_size=22,
-                color=[0, 200, 100],
-                update=True
-            )
-        else:
-            self.set_bottom_label(
                 "—",
                 font_size=22,
                 color=[180, 180, 180],
                 update=True
             )
+        else:
+            days = self.calculate_days_until(date_str)
+            if days is not None:
+                self.set_center_label(
+                    f"{days} days",
+                    font_size=22,
+                    color=[0, 200, 100],
+                    update=True
+                )
+            else:
+                self.set_center_label(
+                    "—",
+                    font_size=22,
+                    color=[180, 180, 180],
+                    update=True
+                )
 
     def calculate_days_until(self, date_str):
         try:
