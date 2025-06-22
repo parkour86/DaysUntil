@@ -82,8 +82,9 @@ class DaysUntilAction(ActionBase):
         else:
             display_date = "____/__/__" if date_format_ymd else "__/__/____"
 
+        # Always show the placeholder if date_str is empty or cleared
         self.set_top_label(
-            f"Days until\n{display_date}",
+            f"Days Until\n{display_date}",
             font_size=14,
             color=[172, 244, 188],  # #ACF4BC
             update=True
@@ -92,7 +93,7 @@ class DaysUntilAction(ActionBase):
 
         days = self.calculate_days_until(date_str) if date_str else None
 
-        if days is not None:
+        if date_str and days is not None:
             label = f"\n{days} days"
             font_size = 15
         else:
