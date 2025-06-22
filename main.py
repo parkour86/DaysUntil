@@ -21,6 +21,7 @@ class DaysUntilAction(ActionBase):
         self.date_entry_row = None
 
     def get_config_rows(self):
+        log.debug("get_config_rows called")
         lm = self.plugin_base.locale_manager
         settings = self.get_settings()
         target_date_str = settings.get("target_date", "")
@@ -32,6 +33,7 @@ class DaysUntilAction(ActionBase):
             text=target_date_str
         )
         self.date_entry_row.connect("changed", self.on_date_changed)
+        log.debug(f"Returning config row: {self.date_entry_row}")
         return [self.date_entry_row]
 
     def on_date_changed(self, entry_row, *args):
