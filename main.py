@@ -87,7 +87,9 @@ class DaysUntilAction(ActionBase):
         self.set_top_label(
             f"{lm.get('actions.daysuntil.name')}\n{display_date}",
             font_size=int(lm.get("actions.daysuntil.toplabel.font", 14)),
+            font_family="cantarell",
             color=[172, 244, 188],  # #ACF4BC
+            outline_width=2,
             update=True
         )
         color = [253, 195, 123]  # #FDC37B
@@ -101,7 +103,7 @@ class DaysUntilAction(ActionBase):
             label = "\n--"
             font_size = 22
 
-        self.set_center_label(label, font_size=font_size, color=color, update=True)
+        self.set_center_label(label, font_size=font_size, font_family="cantarell", color=color, outline_width=2, update=True)
 
     def calculate_days_until(self, date_str):
         try:
@@ -132,7 +134,7 @@ class DaysUntilPlugin(PluginBase):
         self.add_action_holder(self.days_until_holder)
         self.register(
             plugin_name=lm.get("plugin.name"),
-            github_repo="https://github.com/StreamController/DaysUntilPlugin",
+            github_repo="https://github.com/parkour86/DaysUntil",
             plugin_version="1.0.0",
             app_version="1.1.1-alpha"
         )
