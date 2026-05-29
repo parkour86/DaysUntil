@@ -12,6 +12,9 @@ from gi.repository import Gtk, Adw
 
 import datetime
 
+_error_css = Gtk.CssProvider()
+_error_css.load_from_data(b".soft-error { background-color: rgba(200, 50, 50, 0.35); }")
+
 class DaysUntilAction(ActionBase):
     HAS_CONFIGURATION = True  # Show config after adding
 
@@ -34,7 +37,8 @@ class DaysUntilAction(ActionBase):
             try:
                 datetime.datetime.strptime(target_date_str, "%Y/%m/%d")
             except ValueError:
-                self.date_entry_row.add_css_class("error")
+                self.date_entry_row.get_style_context().add_provider(_error_css, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
+                self.date_entry_row.add_css_class("soft-error")
         self.date_entry_row.connect("notify::text", self.on_date_changed)
 
         self.date_format_switch = Adw.SwitchRow(
@@ -52,12 +56,13 @@ class DaysUntilAction(ActionBase):
         if new_date:
             try:
                 datetime.datetime.strptime(new_date, "%Y/%m/%d")
-                entry_row.remove_css_class("error")
+                entry_row.remove_css_class("soft-error")
             except ValueError:
-                entry_row.add_css_class("error")
+                entry_row.get_style_context().add_provider(_error_css, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
+                entry_row.add_css_class("soft-error")
                 return
         else:
-            entry_row.remove_css_class("error")
+            entry_row.remove_css_class("soft-error")
         settings["target_date"] = new_date
         self.set_settings(settings)
         self.update_labels()
