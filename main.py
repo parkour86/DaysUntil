@@ -97,7 +97,10 @@ class DaysUntilAction(ActionBase):
         days = self.calculate_days_until(date_str) if date_str else None
 
         if date_str and days is not None:
-            label = f"\n{days} {lm.get('actions.daysuntil.days_label', 'days')}"
+            if days < 0:
+                label = f"\n{lm.get('actions.daysuntil.passed_label', 'passed')}"
+            else:
+                label = f"\n{days} {lm.get('actions.daysuntil.days_label', 'days')}"
             font_size = 15
         else:
             label = "\n--"
@@ -111,7 +114,7 @@ class DaysUntilAction(ActionBase):
             target_date = datetime.datetime.strptime(date_str, "%Y/%m/%d").date()
             today = datetime.date.today()
             delta = (target_date - today).days
-            return max(delta, 0)
+            return delta
         except Exception as e:
             log.warning(f"Failed to parse date '{date_str}': {e}")
             return None

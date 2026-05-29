@@ -5,5 +5,6 @@
   "actions.daysuntil.dateformat.title": "Formato de fecha",
   "actions.daysuntil.dateformat.subtitle": "Cambiar entre aaaa/mm/dd y mm/dd/aaaa",
   "actions.daysuntil.toplabel.font": "14",
-  "actions.daysuntil.days_label": "días"
+  "actions.daysuntil.days_label": "días",
+  "actions.daysuntil.passed_label": "pasado"
 }
