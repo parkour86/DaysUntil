@@ -32,7 +32,7 @@ class DaysUntilAction(ActionBase):
         self.date_entry_row.set_text(target_date_str)
         if target_date_str:
             try:
-                datetime.datetime.strptime(target_date_str.replace("-", "/"), "%Y/%m/%d")
+                datetime.datetime.strptime(target_date_str, "%Y/%m/%d")
             except ValueError:
                 self.date_entry_row.add_css_class("error")
         self.date_entry_row.connect("notify::text", self.on_date_changed)
@@ -51,7 +51,7 @@ class DaysUntilAction(ActionBase):
         new_date = entry_row.get_text().strip()
         if new_date:
             try:
-                datetime.datetime.strptime(new_date.replace("-", "/"), "%Y/%m/%d")
+                datetime.datetime.strptime(new_date, "%Y/%m/%d")
                 entry_row.remove_css_class("error")
             except ValueError:
                 entry_row.add_css_class("error")
@@ -85,14 +85,10 @@ class DaysUntilAction(ActionBase):
                 # Accept both y/m/d and m/d/y input for display
                 date_obj = None
                 if date_format_ymd:
-                    date_obj = datetime.datetime.strptime(date_str.replace("-", "/"), "%Y/%m/%d").date()
+                    date_obj = datetime.datetime.strptime(date_str, "%Y/%m/%d").date()
                     display_date = date_obj.strftime("%Y/%m/%d")
                 else:
-                    # Try parsing as m/d/y, fallback to y/m/d
-                    try:
-                        date_obj = datetime.datetime.strptime(date_str.replace("-", "/"), "%m/%d/%Y").date()
-                    except Exception:
-                        date_obj = datetime.datetime.strptime(date_str.replace("-", "/"), "%Y/%m/%d").date()
+                    date_obj = datetime.datetime.strptime(date_str, "%Y/%m/%d").date()
                     display_date = date_obj.strftime("%m/%d/%Y")
             except Exception:
                 display_date = date_str
@@ -127,7 +123,6 @@ class DaysUntilAction(ActionBase):
 
     def calculate_days_until(self, date_str):
         try:
-            date_str = date_str.replace("-", "/")
             target_date = datetime.datetime.strptime(date_str, "%Y/%m/%d").date()
             today = datetime.date.today()
             delta = (target_date - today).days
