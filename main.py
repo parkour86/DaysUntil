@@ -30,6 +30,11 @@ class DaysUntilAction(ActionBase):
             title=lm.get("actions.daysuntil.date.title")
         )
         self.date_entry_row.set_text(target_date_str)
+        if target_date_str:
+            try:
+                datetime.datetime.strptime(target_date_str.replace("-", "/"), "%Y/%m/%d")
+            except ValueError:
+                self.date_entry_row.add_css_class("error")
         self.date_entry_row.connect("notify::text", self.on_date_changed)
 
         self.date_format_switch = Adw.SwitchRow(
@@ -43,7 +48,16 @@ class DaysUntilAction(ActionBase):
 
     def on_date_changed(self, entry_row, *args):
         settings = self.get_settings()
-        new_date = entry_row.get_text()
+        new_date = entry_row.get_text().strip()
+        if new_date:
+            try:
+                datetime.datetime.strptime(new_date.replace("-", "/"), "%Y/%m/%d")
+                entry_row.remove_css_class("error")
+            except ValueError:
+                entry_row.add_css_class("error")
+                return
+        else:
+            entry_row.remove_css_class("error")
         settings["target_date"] = new_date
         self.set_settings(settings)
         self.update_labels()
