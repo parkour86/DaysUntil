@@ -57,6 +57,9 @@ class DaysUntilAction(ActionBase):
     def on_ready(self):
         self.update_labels()
 
+    def on_tick(self):
+        self.update_labels()
+
     def update_labels(self):
         settings = self.get_settings()
         date_str = settings.get("target_date", "").strip()
