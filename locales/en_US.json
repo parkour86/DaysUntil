@@ -6,5 +6,6 @@
   "actions.daysuntil.passed_label": "Passed",
   "actions.daysuntil.date.title": "Target Date (yyyy/mm/dd)",
   "actions.daysuntil.dateformat.title": "Date Format",
-  "actions.daysuntil.dateformat.subtitle": "Switch between yyyy/mm/dd and mm/dd/yyyy"
+  "actions.daysuntil.dateformat.subtitle": "Switch between yyyy/mm/dd and mm/dd/yyyy",
+  "actions.daysuntil.label.title": "Label (e.g. New Year's)"
 }

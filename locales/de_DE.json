@@ -6,5 +6,6 @@
   "actions.daysuntil.dateformat.subtitle": "Zwischen JJJJ/MM/TT und MM/TT/JJJJ wechseln",
   "actions.daysuntil.toplabel.font": "14",
   "actions.daysuntil.days_label": "Tage",
-  "actions.daysuntil.passed_label": "Vergangen"
+  "actions.daysuntil.passed_label": "Vergangen",
+  "actions.daysuntil.label.title": "Beschriftung (z. B. Neujahr)"
 }

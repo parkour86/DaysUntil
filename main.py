@@ -22,12 +22,14 @@ class DaysUntilAction(ActionBase):
         super().__init__(*args, **kwargs)
         self.date_entry_row = None
         self.date_format_switch = None
+        self.label_entry_row = None
 
     def get_config_rows(self):
         lm = self.plugin_base.locale_manager
         settings = self.get_settings()
         target_date_str = settings.get("target_date", "")
         date_format_is_ymd = settings.get("date_format_ymd", True)
+        label_str = settings.get("bottom_label", "")
 
         self.date_entry_row = Adw.EntryRow(
             title=lm.get("actions.daysuntil.date.title")
@@ -48,7 +50,13 @@ class DaysUntilAction(ActionBase):
         self.date_format_switch.set_active(date_format_is_ymd)
         self.date_format_switch.connect("notify::active", self.on_date_format_toggled)
 
-        return [self.date_entry_row, self.date_format_switch]
+        self.label_entry_row = Adw.EntryRow(
+            title=lm.get("actions.daysuntil.label.title")
+        )
+        self.label_entry_row.set_text(label_str)
+        self.label_entry_row.connect("notify::text", self.on_label_changed)
+
+        return [self.date_entry_row, self.date_format_switch, self.label_entry_row]
 
     def on_date_changed(self, entry_row, *args):
         settings = self.get_settings()
@@ -64,6 +72,12 @@ class DaysUntilAction(ActionBase):
         else:
             entry_row.remove_css_class("soft-error")
         settings["target_date"] = new_date
+        self.set_settings(settings)
+        self.update_labels()
+
+    def on_label_changed(self, entry_row, *args):
+        settings = self.get_settings()
+        settings["bottom_label"] = entry_row.get_text().strip()
         self.set_settings(settings)
         self.update_labels()
 
@@ -116,7 +130,7 @@ class DaysUntilAction(ActionBase):
 
         if date_str and days is not None:
             if days < 0:
-                label = f"\n{lm.get('actions.daysuntil.passed_label', 'passed')}"
+                label = f"\n{lm.get('actions.daysuntil.passed_label', 'Passed')}"
             else:
                 label = f"\n{days} {lm.get('actions.daysuntil.days_label', 'days')}"
             font_size = 15
@@ -125,6 +139,9 @@ class DaysUntilAction(ActionBase):
             font_size = 22
 
         self.set_center_label(label, font_size=font_size, font_family="cantarell", color=color, outline_width=2, update=True)
+
+        bottom_label = settings.get("bottom_label", "")
+        self.set_bottom_label(bottom_label, font_size=15, font_family="cantarell", color=[255, 255, 255], outline_width=2, update=True)
 
     def calculate_days_until(self, date_str):
         try:

@@ -6,5 +6,6 @@
   "actions.daysuntil.dateformat.subtitle": "Переключение между гггг/мм/дд и мм/дд/гггг",
   "actions.daysuntil.toplabel.font": "14",
   "actions.daysuntil.days_label": "дней",
-  "actions.daysuntil.passed_label": "Прошло"
+  "actions.daysuntil.passed_label": "Прошло",
+  "actions.daysuntil.label.title": "Подпись (напр. Новый год)"
 }
